@@ -1,0 +1,96 @@
+#include "\A3\Missions_F_Kart\Challenges\description_custom.inc" // This will set up various system default settings, such as custom debriefings
+
+
+// This primary trial configuration can also be implemented via a mod config, but doing so via description.ext is simplest in most cases.}}
+class CfgTimeTrials
+{
+	// When using description.ext, the name of this class does not matter much (the system selects the first class)	
+	// When using a mod config, this class name must correspond to the missionName(Source) (also CfgMissions class)
+	class TAG_timeTrial 
+	{
+		displayName = "TT: Time Trial"; // Vanilla trials use a format like this, but it is not enforced
+		// This color is used in many places
+		// It can be any color, but for best results pick a fully supported color (see section below)
+		color[] = {__EVAL(240/255), __EVAL(130/255), __EVAL(49/255), 1};
+		colorName = "orange"; // This version of the color is more restrictive and can only use specific supported colors (see section below)
+		objectTT = "BIS_TT"; // The trial area trigger referenced in the setup guide
+		looped = 1; // Whether the trial will loop when crossing the finish CP (undefined uses 0 - point-to-point race)
+		noDefaultGPS = 0; // Disables showing of the mini-map GPS (undefined uses 0 - showing)
+		//onReset = "reset.sqf"; // This script is executed each time the trial resets (restarts)
+
+		// Object references to the 2 special targets for drill mechanics, as defined in the setup guide
+		restartSelectors[] = {"BIS_TT_restartSelector1"};
+		quitSelectors[] = {"BIS_TT_quitSelector1"};
+		
+		timesMedals[] = { 100, 95, 90 }; // Bronze, silver, gold medal times (be sure to follow this order or results may glitch)
+		
+		timeSpecial = 85; // Optional special time that is faster than gold (when defining this, you do need to also provide the data below)
+		nameSpecial = "Nemesis"; // Optional special time label for the HUD
+		colorSpecial = "#ffa500"; // Optional special time color for the HUD
+		iconSpecial = "\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs"; // Optional special time icon for the HUD
+	
+		// All of the trials's CPs
+		class CheckPoints 
+		{
+			class CP1 // Start
+			{
+				// The CP trigger referenced in the setup guide
+				// Note that TT CPs don't use these actual triggers for CP detection; they are only used as reference (unlike in Firing Drills)
+				object = "BIS_TT_CP_1";
+				//penaltyMissed = 200; // Increasing the default penalty for skipping this CP to 20 seconds
+				//radius = 5; // Forces a non-default CP radius in meters (undefined uses 5)
+				//height = 300.5; // Only use this ASL forced height for CPs above ground, such as for aerial vehicles
+				//onActivate = "CP3_onActivate.sqf"; // Script executed when this CP is activated (passed [CP object])
+				//onDeactivate = "CP3_onDeactivate.sqf"; // Script executed when this CP is deactivated (passed [CP object])
+				//onClear = "CP3_onClear.sqf"; // Script executed when this CP is cleared (passed [CP object])
+				// Especially aerial trials sometimes need artificial helper objects to visualize a CP in the world
+				// These object references are shown / hidden when the CP is active
+				// Typically use 3D helper objects, such as spheres
+				//helpers[] = {"BIS_TT_CP3_Helper1", "BIS_TT_CP3_Helper2", "BIS_TT_CP3_Helper3", "BIS_TT_CP3_Helper4"};
+				//omnidirectional = 1; // This CP may be entered from any angle (undefined uses 0 - only allowing entry from the correct side)
+				//onGround = 1; // This CP requires the vehicle to be on the ground / landed (undefined uses 0 - no ground contact needed)
+				//timeout = 3; // This CP requires the vehicle to meet the CP conditions for 3 seconds
+				//slingLoadLoad = 1; // This CP requires the vehicle to have an externally slung load attached
+				//slingLoadObject = "BIS_TT_SL1"; // Object reference for the specific object that must be slung
+			};
+			class CP2 // CP #1
+			{
+				object = "BIS_TT_CP_2";
+			};
+			class CP3 // CP #2
+			{
+				object = "BIS_TT_CP_3";
+			};
+			class CP4 // CP #3
+			{
+				object = "BIS_TT_CP_4";
+			};
+			class CP5 // CP #4
+			{
+				object = "BIS_TT_CP_5";
+			};
+			class CP6
+			{
+				object = "BIS_TT_CP_6";
+			};
+			class CP7 // Start
+			{
+				object = "BIS_TT_CP_7";
+			};
+			class CP8
+			{
+				object = "BIS_TT_CP_8";
+			};
+			class CP9
+			{
+				object = "BIS_TT_CP_9";
+			};
+			// Finish
+			// Even for a looped trial, the Start and Finish are separate CPs!
+			class CP10
+			{
+				object = "BIS_TT_CP_10";
+			};
+		};
+	};
+};
